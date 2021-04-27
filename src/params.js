@@ -2,9 +2,9 @@ import { Dimensions } from 'react-native'
 
 
 const params = {
-    blockSize: 30,
-    borderSize:5,
-    fontSize:15,
+    blockSize: 50,
+    borderSize:2,
+    fontSize:38,
     headerRatio:0.15, // Representa o tamanho do painel superior na tela
     difficultLevel:0.1, // Nivel de dificultade (0.1 = Facil, 0.2 = Medio, 0.3 = Dificil)
     getColumnsAmount() {
