@@ -1,11 +1,13 @@
 import React from 'react';
 import {
-  SafeAreaView,
+  View,
   StyleSheet,
   Text
 } from 'react-native';
 
 import params from '../params'
+import Mine from './Mine'
+import Flag from './Flag'
 
 const style = StyleSheet.create({
     field: {
@@ -15,29 +17,29 @@ const style = StyleSheet.create({
         fontSize:params.fontSize,
     },
     regular:{
-        backgroundColor:'#778899',
+        backgroundColor:'#808080',
         alignItems:'center',
         justifyContent:'center',
     },
     opened:{
-        backgroundColor:'#90EE90',
+        backgroundColor:'#C0C0C0',
         alignItems:'center',
         justifyContent:'center',
     },
-    mined:{
+    exploded:{
         backgroundColor:'red',
-        alignItems:'center',
-        justifyContent:'center',
+        borderColor:'black',
     }
 })
 
 export default (props) => {
-    const { mined, opened, nearMines  } = props
+    const { mined, opened, nearMines, exploded, flagged } = props
     const styleField = [style.field]
 
     // Outros styles do campo minado aqui
     if(opened) styleField.push(style.opened)
-    if(mined) styleField.push(style.mined)
+    if(exploded) styleField.push(style.exploded)
+    if(flagged) styleField.push(style.flagged, style.regular)
     if(styleField.length === 1) styleField.push(style.regular)
 
     let cor = ''
@@ -59,14 +61,30 @@ export default (props) => {
 
     if(!mined && opened && nearMines > 0){
         return(
-            <SafeAreaView style={[styleField]} >
-                <Text style={[{color:cor}]}> {nearMines} </Text>
-            </SafeAreaView>
+            <View style={[styleField]} >
+                <Text style={[{color:cor,fontWeight:'bold'}]}> {nearMines} </Text>
+            </View>
         )
-    }else{
+    }
+    else if(mined && opened){
         return(
-            <SafeAreaView style={[styleField]} >
-            </SafeAreaView>
+            <View style={[styleField]} >
+                <Mine></Mine>
+            </View>
+        )
+    }   
+    else if(flagged && !opened){
+        return(
+            <View style={[styleField]} >
+                <Flag></Flag>
+            </View>
+        )
+    }
+    else{
+        return(
+            <View style={[styleField]} >
+
+            </View>
         )
     }
 }
